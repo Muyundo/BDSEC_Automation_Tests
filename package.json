@@ -1,6 +1,18 @@
 {
-  "dependencies": {
-    "cypress": "^13.14.2",
+  "devDependencies": {
+    "@cypress-audit/lighthouse": "^1.2.0",
+    "cypress": "^13.15.0",
     "faker": "^5.5.3"
+  },
+
+  "scripts": {
+    "build:production": "node --version",
+    "build": "echo 'No build step defined'", 
+    "start": "npx cypress open",               
+    "test": "npx cypress run"                 
+  },
+
+  "dependencies": {
+    "nodemailer": "^6.9.13"
   }
 }
