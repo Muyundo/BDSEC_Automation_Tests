@@ -16,7 +16,7 @@ jobs:
 
       # Uncomment this step if you have a build process, otherwise skip it
       # - name: Build the app
-      #   run: npm run build
+     
 
       - name: Run Cypress tests
         run: npm test
