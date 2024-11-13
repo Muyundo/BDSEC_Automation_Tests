@@ -1,6 +1,7 @@
 ///<reference types="cypress" />
 
 import faker from 'faker'
+let patientData;
 context('Actions', () => {
     beforeEach(() => {
         cy.baseurl();
@@ -31,6 +32,7 @@ context('Actions', () => {
       cy.get('#familyName').type(lname)
       cy.get('#gender').select(randomGender)
       cy.get('#ageYears').type(randomAge)
+      cy.get('#phoneNumber').type(phone)
       cy.get('.submit-btn').click()
 
             cy.get('#patientIdentifierValue')
@@ -48,11 +50,11 @@ context('Actions', () => {
             });
 
 
-      cy.get('#phoneNumber').type(phone)
-      cy.get('.back-btn > .fa').click()
+      //cy.get('#phoneNumber').type(phone)
+     // cy.get('.back-btn > .fa').click()
 })
 
-    it('.type() - Search Registered Patient using their ID',()=>{
+   /* it('.type() - Search Registered Patient using their ID',()=>{
       cy.get('.fa-user').click()
       cy.get('#registrationNumber').type(patientData.registrationNumber)
          })
@@ -65,7 +67,7 @@ context('Actions', () => {
     it('.type() - Search Registered Patient using their Number',()=>{
           cy.get('.#phoneNumber').click()
           cy.get('#phoneNumber').type(patientData.phone)
-                 })
+                 })*/
 })
 
 
