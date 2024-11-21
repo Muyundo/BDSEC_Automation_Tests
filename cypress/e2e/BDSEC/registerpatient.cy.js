@@ -12,62 +12,54 @@ context('Actions', () => {
       const fname = faker.name.firstName()
       const mname = faker.name.firstName()
       const lname = faker.name.lastName()
-      const phone = faker.phone.phoneNumber();
 
+      // Generate a valid phone number starting with 07 and up to 10 digits
+      const phone = '07' + Math.floor(Math.random() * 1000000000); // Generate a number between 07 and 0799999999
 
       const genders = ['Male', 'Female']
       const randomGender = genders[Math.floor(Math.random() * genders.length)];
       const randomAge = Math.floor(Math.random() * 50) + 1;
 
-      cy.wait(5000)
+      // Start filling the form
       cy.get('#location').select('Registration Desk')
-      cy.wait(5000)
       cy.get('.confirm').click()
-      cy.wait(5000)
       cy.get('.fa-user').click()
       cy.get('.fa-plus').click()
 
+      // Type in the fields
       cy.get('#givenName').type(fname)
       cy.get('#middleName').type(mname)
       cy.get('#familyName').type(lname)
       cy.get('#gender').select(randomGender)
       cy.get('#ageYears').type(randomAge)
       cy.get('#phoneNumber').type(phone)
-      cy.get('.submit-btn').click()
 
-            cy.get('#patientIdentifierValue')
-            .invoke('text')
-            .then((registrationNumber) => {
-              patientData = {
-                fname,
-                mname,
-                lname,
-                phone,
-                registrationNumber: registrationNumber.trim() 
-              };
+      // Toggle and select a random visit
+      cy.get('button.toggle-button').click();  // toggle visits 
+      cy.get('.options > li').then(($options) => { // display visits
+       const totalOptions = $options.length;
+       const randomIndex = Math.floor(Math.random() * totalOptions);
+       cy.wrap($options[randomIndex]).find('button').click(); // select a random visit
+      })
+      cy.wait(1000)
 
-              cy.log(`Registered patient: ${patientData.fname} ${patientData.mname} ${patientData.lname} ${patientData.phone} with ID: ${patientData.registrationNumber}`);
-            });
+      // Submit the form
+     cy.contains('Save').click();
 
+      /* Uncomment and use this to log patient details or for additional actions
+      cy.get('#patientIdentifierValue')
+        .invoke('text')
+        .then((registrationNumber) => {
+          patientData = {
+            fname,
+            mname,
+            lname,
+            phone,
+            registrationNumber: registrationNumber.trim() 
+          };
 
-      //cy.get('#phoneNumber').type(phone)
-     // cy.get('.back-btn > .fa').click()
+          cy.log(`Registered patient: ${patientData.fname} ${patientData.mname} ${patientData.lname} ${patientData.phone} with ID: ${patientData.registrationNumber}`);
+        });
+      */
+    })
 })
-
-   /* it('.type() - Search Registered Patient using their ID',()=>{
-      cy.get('.fa-user').click()
-      cy.get('#registrationNumber').type(patientData.registrationNumber)
-         })
-
-    it('.type() - Search Registered Patient using their name',()=>{
-          cy.get('#givenName').click()
-          cy.get('#givenName').type(patientData.fname)
-             })
-
-    it('.type() - Search Registered Patient using their Number',()=>{
-          cy.get('.#phoneNumber').click()
-          cy.get('#phoneNumber').type(patientData.phone)
-                 })*/
-})
-
-
