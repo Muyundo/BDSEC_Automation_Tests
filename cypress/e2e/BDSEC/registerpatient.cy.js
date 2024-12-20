@@ -86,14 +86,18 @@ context('Actions', () => {
     cy.get('.smallImages').click()
     cy.wait(1000)
     cy.get('.loader', { timeout: 10000 }).should('not.exist')
-    cy.contains('onsultation').click()
+    cy.get('.btn--left').click()
     cy.contains('Orders').click()
     cy.waitForLoader()
-    cy.get(':nth-child(5) > .grid-row-element').click({ force: true })
-    cy.get(':nth-child(6) > .grid-row-element').click({ force: true })
-    cy.get(':nth-child(7) > .grid-row-element').click({ force: true })
-    cy.get(':nth-child(8) > .grid-row-element').click({ force: true })
-    cy.get(':nth-child(9) > .grid-row-element').click({ force: true })
+    cy.contains('Arterial lactate').click({ force: true })
+    cy.contains('Bands').click({ force: true })
+    cy.contains('RhD screen').click({ force: true })
+    cy.contains('Basos').click({ force: true })
+    cy.contains('Beta globulin level').click({ force: true })
+
+
+
+
     cy.get('.confirm > .fa')
   })
 })
