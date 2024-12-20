@@ -25,7 +25,7 @@ context('Actions', () => {
     cy.get('.fa-user').click()
     cy.waitForLoader()
 
-    cy.get('.fa-plus').click()
+    cy.get('.fa-plus').click({force: true})
 
     // Type in the fields
     cy.get('#givenName').type(fname)
@@ -95,9 +95,6 @@ context('Actions', () => {
     cy.contains('Basos').click({ force: true })
     cy.contains('Beta globulin level').click({ force: true })
 
-
-
-
     cy.get('.confirm > .fa')
-  })
+   })
 })
