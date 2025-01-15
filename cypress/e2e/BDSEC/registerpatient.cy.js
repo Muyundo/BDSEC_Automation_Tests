@@ -47,7 +47,7 @@ context('Actions', () => {
     // Submit the form
     cy.contains('Save').click({ force: true })
     cy.wait(1000)
-    cy.contains('Back').click()
+    cy.contains('Back').click({force: true})
 
     // Capture patient data for reuse
     cy.get('#patientIdentifierValue')
@@ -80,12 +80,16 @@ context('Actions', () => {
       cy.get('.fa-stethoscope').click()
       cy.waitForLoader()
       cy.get('#patientIdentifier', { timeout: 10000 }).should('be.visible')
+      cy.waitForLoader() 
       cy.get('#patientIdentifier').type(`${patientData.fname}`)
     })
+    cy.waitForLoader()
 
     cy.get('.smallImages').click()
-    cy.wait(1000)
+    cy.waitForLoader()
     cy.get('.loader', { timeout: 10000 }).should('not.exist')
+    cy.waitForLoader()
+
     cy.get('.btn--left').click()
     cy.contains('Orders').click()
     cy.waitForLoader()
@@ -95,6 +99,10 @@ context('Actions', () => {
     cy.contains('Basos').click({ force: true })
     cy.contains('Beta globulin level').click({ force: true })
 
-    cy.get('.confirm > .fa')
+    cy.get('.confirm > .fa').click()
+    cy.waitForLoader()
+    cy.get('.opd-header-bottom > :nth-child(1) > bm-back-links > ul > li.ng-scope > #patients-link > .fa').click()
+    cy.waitForLoader()
+    cy.get('.back-btn > .fa').click()
    })
 })
