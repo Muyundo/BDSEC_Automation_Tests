@@ -1,6 +1,7 @@
+name: Cypress Tests
 on: push
 jobs:
-  build:
+  cypress-run:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout code
@@ -16,7 +17,12 @@ jobs:
 
       # Uncomment this step if you have a build process, otherwise skip it
       # - name: Build the app
-     
+      #   run: npm run build
 
-      - name: Run Cypress tests
-        run: npm test
+      - name: Run Cypress tests and record to Cypress Cloud
+        uses: cypress-io/github-action@v6
+        with:
+          record: true 
+          parallel: false 
+        env:
+          CYPRESS_RECORD_KEY: ${{ secrets.CYPRESS_RECORD_KEY }} 
