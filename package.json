@@ -1,7 +1,7 @@
 {
   "devDependencies": {
     "@cypress-audit/lighthouse": "^1.2.0",
-    "cypress": "^13.16.0",
+    "cypress": "^13.17.0",
     "faker": "^5.5.3"
   },
   "scripts": {
