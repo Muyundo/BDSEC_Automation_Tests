@@ -4,6 +4,9 @@ on: push
 jobs:
   cypress-run:
     runs-on: ubuntu-latest
+    env:
+      CYPRESS_USERNAME: ${{ secrets.CYPRESS_USERNAME }}
+      CYPRESS_PASSWORD: ${{ secrets.CYPRESS_PASSWORD }}
 
     steps:
       - name: Checkout code
