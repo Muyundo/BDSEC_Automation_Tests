@@ -7,7 +7,7 @@ jobs:
     env:
       CYPRESS_USERNAME: ${{ secrets.CYPRESS_USERNAME }}
       CYPRESS_PASSWORD: ${{ secrets.CYPRESS_PASSWORD }}
-
+    
     steps:
       - name: Checkout code
         uses: actions/checkout@v4  # Updated to the latest stable version
