@@ -174,7 +174,7 @@ it('Start the patient visit',  () =>{
     
 
   })
-/*
+
 
     it('Make Lab Orders', () => {
     const patientData = Cypress.env('patientData');
@@ -226,6 +226,6 @@ it('Start the patient visit',  () =>{
     cy.get('#todaySamplesCollectedListContainerId').click()
     cy.get('#todaySamplesCollectedListContainer-slick-grid > .slick-headerrow > .slick-headerrow-columns > .l2 > input').type(`${patientData.fname}`)
     cy.get('[style="top:0px"] > .l12 > #result > #actionIcon').click()
-})*/
+})
 })
      
