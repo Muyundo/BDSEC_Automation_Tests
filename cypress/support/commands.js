@@ -5,8 +5,8 @@ Cypress.Commands.add("baseurl", () => {
 
 Cypress.Commands.add('login', () => {
    cy.wait(2000)
-   cy.get('#username').type(Cypress.env('CYPRESS_USERNAME'))
-   cy.get('#password').type(Cypress.env('CYPRESS_PASSWORD'))
+   cy.get('#username').type(Cypress.env('superman'))
+   cy.get('#password').type(Cypress.env('Admin123'))
    cy.wait(2000)
    cy.get('[ng-hide="showOTP"] > .ng-isolate-scope > .login-body > .form-footer > .confirm').click()
 });
