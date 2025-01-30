@@ -114,6 +114,7 @@ context('Actions', () => {
       cy.get('.btn--left').click()
       cy.wait(5000)
       cy.get('#template-control-panel-button').click()
+      cy.waitForLoader()
       cy.get('#Amsler_Grid_Test').click()
 
       function selectRandomOptionsForAllDropdowns() {
@@ -180,6 +181,24 @@ context('Actions', () => {
       cy.get('[width="80%"] > .textButton').click()
       cy.wait(500)
       cy.get('#saveButtonId').click()
+      cy.get('#todaySamplesCollectedListContainerId').click()
+      cy.get('#todaySamplesCollectedListContainer-slick-grid > .slick-headerrow > .slick-headerrow-columns > .l2 > input').type(`${patientData.fname}`)
+      cy.get('.l12 > #result > #actionIcon').click()
+      cy.get('#results_1').type('10')
+      cy.get('#results_3').type('25')
+      cy.get('#saveButtonId').click()
+      cy.waitForLoader()
+      cy.get('[style="top:0px"] > .l12 > #validate > #actionIcon').click()
+        // Accept lab results
+        cy.get('table tbody tr').each(($row, index, $rows) => {
+          cy.wrap($row).find('td').eq(4).find('input[type="checkbox"]').then(($checkbox) => {
+            if (!$checkbox.prop('disabled')) {
+              cy.wrap($checkbox).click()
+            }
+          })
+        })     
+      cy.get('#saveButtonId').click()
+
     })
   })
 })
