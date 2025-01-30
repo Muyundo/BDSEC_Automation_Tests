@@ -1,8 +1,6 @@
 ///<reference types="cypress" />
 
 import faker from 'faker'
-const numberOfDownArrowPresses = Cypress._.random(1, 10)
-
 context('Actions', () => {
   beforeEach(() => {
     cy.baseurl()
@@ -21,14 +19,7 @@ context('Actions', () => {
     const randomGender = genders[Math.floor(Math.random() * genders.length)]
     const randomAge = Math.floor(Math.random() * 50) + 1
 
-    // Start filling the form
-    cy.waitForLoader()
-    cy.get('#location').select('Registration Desk')
-    cy.get('.confirm').click()
-    cy.waitForLoader()
-    cy.get('.fa-user').click()
-    cy.waitForLoader()
-
+    cy.module()
     cy.get('.fa-plus').click({ force: true })
     cy.waitForLoader()
 
@@ -59,8 +50,6 @@ context('Actions', () => {
         }
 
         cy.log(`Captured Registration Number: ${patientData.registrationNumber}`)
-
-        // Write to JSON file for later use
         cy.writeFile('cypress/fixtures/patientData.json', patientData)
       })
     })

@@ -8,15 +8,7 @@ context('Actions', () => {
   })
 it('Start the patient visit', () => {
     cy.readFile('cypress/fixtures/patientData.json').then((patientData) => {
-      cy.log(`Retrieved Registration Number: ${patientData.registrationNumber}`)
-
-      cy.waitForLoader()
-      cy.get('#location').select('Registration Desk')
-      cy.get('.confirm').click()
-      cy.waitForLoader()
-      cy.get('.fa-user').click()
-      cy.waitForLoader()
-
+      cy.module()
       // Use the captured registration number
       cy.get('#registrationNumber').should('be.visible').type(patientData.registrationNumber)
       cy.wait(2000)

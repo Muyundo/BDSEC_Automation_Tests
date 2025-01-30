@@ -5,13 +5,7 @@ context('Actions', () => {
     })
   it('Make Lab Orders', () => {
     cy.readFile('cypress/fixtures/patientData.json').then((patientData) => {
-      cy.waitForLoader()
-      cy.get('#location').select('Registration Desk')
-      cy.get('.confirm').click()
-      cy.waitForLoader()
-      cy.get('.fa-stethoscope').click()
-      cy.waitForLoader()
-
+      cy.module()
       // Search for the registered patient
       cy.get('#patientIdentifier').should('be.visible').type(patientData.fname)
       cy.waitForLoader()
