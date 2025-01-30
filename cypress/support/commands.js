@@ -1,6 +1,6 @@
 Cypress.Commands.add("baseurl", () => {
-   // cy.visit("http://102.133.147.40/bahmni/home/index.html#/login");
-    cy.visit('https://bdsec.intellisoftkenya.com/bahmni/home/')
+    cy.visit("http://102.133.147.40/bahmni/home/index.html#/login");
+   // cy.visit('https://bdsec.intellisoftkenya.com/bahmni/home/')
 });
 
 Cypress.Commands.add('login', () => {

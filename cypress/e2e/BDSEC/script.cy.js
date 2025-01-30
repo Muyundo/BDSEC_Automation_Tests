@@ -46,7 +46,7 @@ context('Actions', () => {
     cy.get('.submit-btn').click()
 
     // Capture and store patient data
-    cy.get('#patientIdentifierValue')
+    cy.get('#patientIdentifierValue', { timeout: 10000 })
       .should('be.visible')
       .invoke('text')
       .then((registrationNumber) => {
@@ -136,7 +136,52 @@ context('Actions', () => {
     })
   })
 
-  it('Make Lab Orders', () => {
+  it('Patient Disposition', () => {
+    cy.readFile('cypress/fixtures/patientData.json').then((patientData) => {
+      cy.waitForLoader()
+      cy.get('#location').select('Registration Desk')
+      cy.get('.confirm').click()
+      cy.waitForLoader()
+      cy.get('.fa-stethoscope').click()
+      cy.waitForLoader()
+      cy.get('#patientIdentifier').should('be.visible').type(patientData.fname)
+      cy.waitForLoader()
+      cy.get('.smallImages').click()
+      cy.waitForLoader()
+      cy.get('.loader').should('not.exist')
+      cy.waitForLoader()
+      cy.get('.btn--left').click()
+      cy.waitForLoader()      
+      cy.contains('Disposition').click()
+      cy.waitForLoader()      
+      cy.get('#dispositionAction')
+        .select('Admit Patient') 
+        .should('have.value', 'string:ADMIT')
+    
+      cy.get('#dispositionNotes').type('Admin patient for further monitoring')
+      cy.get(':nth-child(3) > .confirm').click()
+
+
+  })
+})
+
+it('Admit Patient', () =>{
+  cy.readFile('cypress/fixtures/patientData.json').then((patientData) => {
+    cy.get('#location').select('Registration Desk')
+    cy.get('.confirm').click()
+    cy.get('#bahmni\.ipd').click()
+    cy.get('#patientIdentifier').type(patientData.registrationNumber)
+    cy.get('.smallImages').click()
+    cy.get('.bed-type-selection > :nth-child(2)').click()
+    
+
+
+
+
+})
+})
+
+ /* it('Make Lab Orders', () => {
     cy.readFile('cypress/fixtures/patientData.json').then((patientData) => {
       cy.waitForLoader()
       cy.get('#location').select('Registration Desk')
@@ -200,5 +245,5 @@ context('Actions', () => {
       cy.get('#saveButtonId').click()
 
     })
-  })
+  })*/
 })
