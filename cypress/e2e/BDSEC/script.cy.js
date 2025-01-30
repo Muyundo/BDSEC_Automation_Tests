@@ -169,11 +169,11 @@ it('Admit Patient', () =>{
   cy.readFile('cypress/fixtures/patientData.json').then((patientData) => {
     cy.get('#location').select('Registration Desk')
     cy.get('.confirm').click()
-    cy.get('#bahmni\.ipd').click()
+    cy.get('.fa-bed').click()
     cy.get('#patientIdentifier').type(patientData.registrationNumber)
     cy.get('.smallImages').click()
     cy.get('.bed-type-selection > :nth-child(2)').click()
-    
+
 
 
 
