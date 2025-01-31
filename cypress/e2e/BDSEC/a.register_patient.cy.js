@@ -21,6 +21,7 @@ context('Actions', () => {
 
     cy.module()
     cy.get('.fa-user').click()
+    cy.waitForLoader()
     cy.get('.fa-plus').click({ force: true })
     cy.waitForLoader()
 
