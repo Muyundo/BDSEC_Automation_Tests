@@ -7,6 +7,7 @@ context('Actions', () => {
   it('Patient Disposition', () => {
     cy.readFile('cypress/fixtures/patientData.json').then((patientData) => {
       cy.module()
+      cy.get('.fa-stethoscope').click()
       cy.get('#patientIdentifier').should('be.visible').type(patientData.fname)
       cy.waitForLoader()
       cy.get('.smallImages').click()

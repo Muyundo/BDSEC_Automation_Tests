@@ -7,7 +7,8 @@ context('Actions', () => {
 it('Update Clinical forms', () => {
     cy.readFile('cypress/fixtures/patientData.json').then((patientData) => {
       cy.module()
-      // Search for the registered patient
+      cy.get('.fa-stethoscope').click()
+      cy.waitForLoader()
       cy.get('#patientIdentifier').should('be.visible').type(patientData.fname)
       cy.waitForLoader()
       cy.get('.smallImages').click()

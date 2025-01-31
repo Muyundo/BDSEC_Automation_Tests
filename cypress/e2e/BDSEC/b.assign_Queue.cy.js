@@ -10,6 +10,8 @@ it('Start the patient visit', () => {
     cy.readFile('cypress/fixtures/patientData.json').then((patientData) => {
       cy.module()
       // Use the captured registration number
+      cy.get('.fa-user').click()
+      cy.waitForLoader()
       cy.get('#registrationNumber').should('be.visible').type(patientData.registrationNumber)
       cy.wait(2000)
       

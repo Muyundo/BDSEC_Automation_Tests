@@ -1,6 +1,6 @@
 Cypress.Commands.add("baseurl", () => {
-   // cy.visit("http://102.133.147.40/bahmni/home/index.html#/login");
-    cy.visit('https://bdsec.intellisoftkenya.com/bahmni/home/')
+    cy.visit("http://102.133.147.40/bahmni/home/index.html#/login");
+   // cy.visit('https://bdsec.intellisoftkenya.com/bahmni/home/')
 })
 
 Cypress.Commands.add('login', () => {
@@ -31,8 +31,7 @@ Cypress.Commands.add('module', ()=>{
   cy.get('#location').select('Registration Desk')
   cy.get('.confirm').click()
   cy.waitForLoader()
-  cy.get('.fa-user').click()
-  cy.waitForLoader()
+
 })
 
 
