@@ -8,6 +8,7 @@ context('Actions', () => {
     cy.readFile('cypress/fixtures/patientData.json').then((patientData) => {
       cy.module()
       cy.get('.fa-stethoscope').click()
+      cy.waitForLoader()
       cy.get('#patientIdentifier').should('be.visible').type(patientData.fname)
       cy.waitForLoader()
       cy.get('.smallImages').click()
@@ -32,16 +33,13 @@ context('Actions', () => {
 
 it('Admit Patient', () =>{
     cy.readFile('cypress/fixtures/patientData.json').then((patientData) => {
-      cy.waitForLoader()
-      cy.get('#location').select('Registration Desk')
-      cy.get('.confirm').click()
-      cy.waitForLoader()
+      cy.module()
       cy.get('.fa-bed').click()
       cy.waitForLoader()
       cy.get('#patientIdentifier').type(patientData.registrationNumber)
       cy.waitForLoader()
       cy.get('.smallImages').click()
-      cy.waitForLoader
+      cy.waitForLoader()
       cy.get('.bed-type-selection > :nth-child(2)').click()
     })
 })

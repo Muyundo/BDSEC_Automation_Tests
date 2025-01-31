@@ -20,6 +20,7 @@ context('Actions', () => {
     const randomAge = Math.floor(Math.random() * 50) + 1
 
     cy.module()
+    cy.get('.fa-user').click()
     cy.get('.fa-plus').click({ force: true })
     cy.waitForLoader()
 
