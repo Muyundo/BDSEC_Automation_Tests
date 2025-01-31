@@ -9,7 +9,7 @@ it('Update Clinical forms', () => {
       cy.module()
       cy.get('.fa-stethoscope').click()
       cy.waitForLoader()
-      cy.get('#patientIdentifier').should('be.visible').type(patientData.fname)
+      cy.get('#patientIdentifier').should('be.visible').type(patientData.registrationNumber)
       cy.waitForLoader()
       cy.get('.smallImages').click()
       cy.waitForLoader()
@@ -39,6 +39,23 @@ it('Update Clinical forms', () => {
       selectRandomOptionsForAllDropdowns()
       cy.get(':nth-child(3) > .confirm').click()
       cy.waitForLoader()
+    })
+  })
+
+it('Verify the forms have been saved', ()=>{
+    cy.readFile('cypress/fixtures/patientData.json').then((patientData) => {
+    cy.module()
+    cy.get('.fa-stethoscope').click()
+    cy.waitForLoader()
+    cy.get('#patientIdentifier').should('be.visible').type(patientData.registrationNumber)
+    cy.waitForLoader()
+    cy.get('.smallImages').click()
+    cy.waitForLoader()
+    cy.contains('.form-name', 'Amsler Grid Test', { timeout: 10000 }) 
+      .should('be.visible');
+
+    cy.contains('.form-name', 'Registration Details', { timeout: 10000 })
+      .should('be.visible')
     })
   })
 })
