@@ -1,10 +1,9 @@
 Cypress.Commands.add("baseurl", () => {
-    //cy.visit("http://102.133.147.40/bahmni/home/index.html#/login");
-    cy.visit('https://bdsec.intellisoftkenya.com/bahmni/home/')
+    cy.visit("http://102.133.147.40/bahmni/home/index.html#/login");
+   // cy.visit('https://bdsec.intellisoftkenya.com/bahmni/home/index.html#/login')
 })
 
 Cypress.Commands.add('login', () => {
-   cy.wait(2000)
    cy.get('#username').type('superman')
    cy.get('#password').type('Admin123')
    cy.wait(2000)

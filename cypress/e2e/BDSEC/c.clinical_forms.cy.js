@@ -13,10 +13,12 @@ it('Update Clinical forms', () => {
       cy.get('#patientIdentifier').should('be.visible').type(patientData.registrationNumber)
       cy.get('.smallImages').click()
       cy.wait('@patientDashboard').its('response.statusCode').should('eq', 200)
+      cy.waitForLoader()
 
       // Access the consultation template
       cy.get('.btn--left').click()
       cy.wait('@PublishedForms').its('response.statusCode').should('eq', 200)
+      cy.waitForLoader()
       cy.get('#template-control-panel-button').click()
       //cy.waitForLoader()
       cy.get('#Amsler_Grid_Test').click()

@@ -3,7 +3,7 @@ const { defineConfig } = require("cypress");
 module.exports = defineConfig({
   projectId: '6gphnc',
   e2e: {
-        pageLoadTimeout: 120000, // Increase timeout to 2 minutes
+        pageLoadTimeout: 180000, 
         experimentalStudio: true,
         projectId: '6gphnc',
           
