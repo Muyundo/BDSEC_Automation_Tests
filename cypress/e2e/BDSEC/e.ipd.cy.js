@@ -11,6 +11,7 @@ context('Actions', () => {
       cy.get('.fa-stethoscope').click()
       cy.wait('@patientsInqueue').its('response.statusCode').should('eq', 200)
       cy.get('#patientIdentifier').should('be.visible').type(patientData.registrationNumber)
+      cy.waitForLoader()
       cy.get('.smallImages').click()
       cy.wait('@patientDashboard').its('response.statusCode').should('eq', 200)
 
