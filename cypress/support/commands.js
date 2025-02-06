@@ -1,9 +1,10 @@
 Cypress.Commands.add("baseurl", () => {
-    cy.visit("http://102.133.147.40/bahmni/home/index.html#/login");
-   // cy.visit('https://bdsec.intellisoftkenya.com/bahmni/home/index.html#/login')
+    //cy.visit("http://102.133.147.40/bahmni/home/index.html#/login");
+    cy.visit('https://bdsec.intellisoftkenya.com/bahmni/home/index.html#/login')
 })
 
 Cypress.Commands.add('login', () => {
+  cy.waitForLoader()
    cy.get('#username').type('superman')
    cy.get('#password').type('Admin123')
    cy.wait(2000)
@@ -26,7 +27,8 @@ Cypress.Commands.add('waitForLoader', (timeout = 5000) => {
 })
 
 Cypress.Commands.add('module', ()=>{  //handles logins for each script that needs it
-  cy.waitForLoader()
+  cy.waitForLoader(2)
+
   cy.get('#location').select('Registration Desk')
   cy.get('.confirm').click()
   cy.waitForLoader()
