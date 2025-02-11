@@ -8,7 +8,7 @@ context('Actions', () => {
       cy.module()
       cy.get('.fa-stethoscope').click()
       cy.waitForLoader()
-      cy.get('#patientIdentifier').should('be.visible').type(patientData.fname)
+      cy.get('#patientIdentifier').should('be.visible').type(patientData.registrationNumber)
       cy.waitForLoader()
       cy.get('.smallImages').click()
       cy.waitForLoader()
