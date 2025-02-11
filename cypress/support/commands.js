@@ -27,7 +27,7 @@ Cypress.Commands.add('waitForLoader', (timeout = 5000) => {
 })
 
 Cypress.Commands.add('module', ()=>{  //handles logins for each script that needs it
-  cy.waitForLoader(2)
+  cy.waitForLoader()
 
   cy.get('#location').select('Registration Desk')
   cy.get('.confirm').click()
