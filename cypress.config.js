@@ -5,6 +5,8 @@ module.exports = defineConfig({
   e2e: {
         pageLoadTimeout: 180000, 
         experimentalStudio: true,
+        viewportWidth: 1280,   // Set width
+        viewportHeight: 720,   // Set height
         projectId: '6gphnc',
           
     setupNodeEvents(on, config) {

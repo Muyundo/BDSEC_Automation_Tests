@@ -19,10 +19,12 @@ it('Update Clinical forms', () => {
       cy.get('.btn--left').click()
       cy.wait('@PublishedForms').its('response.statusCode').should('eq', 200)
       cy.waitForLoader()
-      cy.get('#template-control-panel-button').click()
+      //cy.get('#template-control-panel-button').click()
       //cy.waitForLoader()
-      cy.get('#Amsler_Grid_Test').click()
-
+      cy.get('.multi-select-lab-tests ul li', { timeout: 10000 }) // Waits up to 10s
+      .contains('Amsler Grid Test')
+      .click()
+      
       function selectRandomOptionsForAllDropdowns() {
         cy.get('.obs-control-select-wrapper').each(($dropdown) => {
           cy.wrap($dropdown).find('.Select-control').click()
