@@ -45,11 +45,7 @@ context('Actions', () => {
             })
 
            cy.contains('Save').click()
-                  cy.waitForLoader()
-      cy.get('.opd-header-bottom > :nth-child(1) > bm-back-links > ul > li.ng-scope > #patients-link > .fa').click()
-      cy.waitForLoader()
-     
-
+           cy.waitForLoader()
     })
   })
 })
