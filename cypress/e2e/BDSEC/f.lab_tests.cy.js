@@ -22,14 +22,17 @@ context('Actions', () => {
     cy.get('#saveButtonId').click()
     cy.waitForLoader()
     cy.get('[style="top:0px"] > .l12 > #validate > #actionIcon').click()
-      // Accept lab results
+    cy.waitForLoader()
+      /*// Accept lab results
       cy.get('table tbody tr').each(($row, index, $rows) => {
         cy.wrap($row).find('td').eq(4).find('input[type="checkbox"]').then(($checkbox) => {
           if (!$checkbox.prop('disabled')) {
             cy.wrap($checkbox).click()
           }
         })
-      })     
+      })*/
+        cy.get('#accepted_0').click()
+        cy.get('#accepted_1').click()     
     cy.get('#saveButtonId').click()
         })
     })
