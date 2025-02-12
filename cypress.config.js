@@ -7,6 +7,8 @@ module.exports = defineConfig({
         experimentalStudio: true,
         viewportWidth: 1280,   // Set width
         viewportHeight: 720,   // Set height
+        chromeWebSecurity: false,
+
         projectId: '6gphnc',
           
     setupNodeEvents(on, config) {
