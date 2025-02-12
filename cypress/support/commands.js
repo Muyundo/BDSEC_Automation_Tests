@@ -31,7 +31,7 @@ Cypress.Commands.add('module', ()=>{  //handles logins for each script that need
 
   cy.get('#location').select('Registration Desk')
   cy.get('.confirm').click()
-  cy.waitForLoader()
+  cy.waitForPageLoad()
 
 })
 
@@ -43,6 +43,54 @@ Cypress.Commands.add('interceptAPI', ()=> {
   cy.intercept('GET', '**/website/translations/**').as('InventoryDashboard')
 })
 
+
+Cypress.Commands.add('waitForPageLoad', (options = {}) => {
+  const timeout = options.timeout || 60000
+  return cy.window({ timeout }).should((window) => {
+    // Check document ready state
+    expect(window.document.readyState).to.equal('complete')
+
+    // Check if jQuery is being used and all AJAX requests are complete
+    if (window.jQuery) {
+      expect(window.jQuery.active).to.equal(0);
+    }
+
+    // Check for loading spinners (adjust selectors based on your app)
+    const spinners = window.document.querySelectorAll('.loading, .spinner, .loader, .o_loading');
+    expect(spinners.length).to.equal(0);
+  })
+})
+
+
+// Additional command for network idle
+Cypress.Commands.add('waitForNetworkIdle', (options = {}) => {
+  const timeout = options.timeout || 10000;
+  let pendingRequests = 0;
+
+  cy.intercept({ url: '**' }, (req) => {
+    pendingRequests++;
+    req.on('response', () => {
+      pendingRequests--
+    })
+  })
+
+  return cy.wait(100) // Small initial wait
+    .then(() => {
+      return new Cypress.Promise((resolve, reject) => {
+        const checkRequests = () => {
+          if (pendingRequests === 0) {
+            resolve();
+          } else if (timeout <= 0) {
+            reject(new Error('Timed out waiting for network idle'))
+          } else {
+            timeout -= 100;
+            setTimeout(checkRequests, 100)
+          }
+        };
+        checkRequests()
+      })
+    })
+})
 
 Cypress.on('uncaught:exception', (err, runnable) => {
     return false
