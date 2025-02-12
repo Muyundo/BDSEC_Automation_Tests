@@ -4,16 +4,28 @@ context('Actions', () => {
       cy.baseurl()
       cy.login()
       cy.interceptAPI()
+      //cy.waitForPageLoad()
     })
 it('Update Clinical forms', () => {
     cy.readFile('cypress/fixtures/patientData.json').then((patientData) => {
       cy.module()
-      cy.get('.fa-stethoscope').click()
+      cy.get('.apps > ul').contains('Clinical', { timeout: 10000 }).should('be.visible').click()
       cy.wait('@patientsInqueue').its('response.statusCode').should('eq', 200)
-      cy.get('#patientIdentifier').should('be.visible').type(patientData.registrationNumber)
-      cy.get('.smallImages').click()
+      //cy.get('#patientIdentifier').should('be.visible').type(patientData.registrationNumber)
+      const regNumber = patientData.registrationNumber
+            cy.get('.active-patient').each(($el) => {
+              cy.wrap($el)
+                .find('.patient-id')
+                .invoke('text')
+                .then((text) => {
+                  if (text.trim() === regNumber) {
+                    cy.wrap($el).click()
+                    return false 
+                  }
+                })
+            })      
       cy.wait('@patientDashboard').its('response.statusCode').should('eq', 200)
-      cy.waitForLoader()
+      cy.waitForPageLoad()
 
       // Access the consultation template
       cy.get('.btn--left').click()
@@ -21,7 +33,7 @@ it('Update Clinical forms', () => {
       cy.waitForLoader()
       //cy.get('#template-control-panel-button').click()
       //cy.waitForLoader()
-      cy.get('.multi-select-lab-tests ul li', { timeout: 10000 }) // Waits up to 10s
+      cy.get('.multi-select-lab-tests ul li', { timeout: 10000 }) 
       .contains('Amsler Grid Test')
       .click()
       
