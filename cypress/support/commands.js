@@ -40,6 +40,7 @@ Cypress.Commands.add('interceptAPI', ()=> {
   ).as('patientsInqueue')
   cy.intercept('POST','**openmrs/ws/rest/v1/user/**').as('patientDashboard')
   cy.intercept('GET','**openmrs/ws/rest/v1/bahmniie/form/latestPublishedForms' ).as('PublishedForms')
+  cy.intercept('GET', '**/website/translations/**').as('InventoryDashboard')
 })
 
 
