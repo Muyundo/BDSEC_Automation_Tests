@@ -5,16 +5,26 @@ context('Actions', () => {
       cy.interceptAPI()
     })
 
-  /*it('Patient Disposition', () => {
+  it('Patient Disposition', () => {
     cy.readFile('cypress/fixtures/patientData.json').then((patientData) => {
       cy.module()
-      cy.get('.fa-stethoscope').click()
+      cy.get('.apps > ul').contains('Clinical', { timeout: 10000 }).should('be.visible').click()
       cy.wait('@patientsInqueue').its('response.statusCode').should('eq', 200)
-      cy.get('#patientIdentifier').should('be.visible').type(patientData.registrationNumber)
-      cy.waitForLoader()
-      cy.get('.smallImages').click()
+     // cy.get('#patientIdentifier').should('be.visible').type(patientData.registrationNumber)
+     const regNumber = patientData.registrationNumber
+     cy.get('.active-patient').each(($el) => {
+       cy.wrap($el)
+         .find('.patient-id')
+         .invoke('text')
+         .then((text) => {
+           if (text.trim() === regNumber) {
+             cy.wrap($el).click()
+             return false 
+           }
+         })
+     })      
       cy.wait('@patientDashboard').its('response.statusCode').should('eq', 200)
-      cy.waitForLoader()
+      cy.waitForPageLoad()
       // Access the consultation section
       cy.get('.btn--left').click()
       //cy.wait('@PublishedForms').its('response.statusCode').should('eq', 200)     
@@ -30,7 +40,7 @@ context('Actions', () => {
 
 
   })
-})*/
+})
 
 it('Admit a patient into a random ward', () => {
   cy.readFile('cypress/fixtures/patientData.json').then((patientData) => {
