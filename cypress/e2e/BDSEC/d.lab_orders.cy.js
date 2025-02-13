@@ -6,19 +6,27 @@ context('Actions', () => {
   it('Make Lab Orders', () => {
     cy.readFile('cypress/fixtures/patientData.json').then((patientData) => {
       cy.module()
-      cy.get('.fa-stethoscope').click()
-      cy.waitForLoader()
-      cy.get('#patientIdentifier').should('be.visible').type(patientData.registrationNumber)
-      cy.waitForLoader()
-      cy.get('.smallImages').click()
-      cy.waitForLoader()
-      cy.get('.loader').should('not.exist')
-      cy.waitForLoader()
+      cy.get('.apps > ul').contains('Clinical', { timeout: 10000 }).should('be.visible').click()
+      cy.wait('@patientsInqueue').its('response.statusCode').should('eq', 200)
+      //cy.get('#patientIdentifier').should('be.visible').type(patientData.registrationNumber)
+      const regNumber = patientData.registrationNumber
+            cy.get('.active-patient').each(($el) => {
+              cy.wrap($el)
+                .find('.patient-id')
+                .invoke('text')
+                .then((text) => {
+                  if (text.trim() === regNumber) {
+                    cy.wrap($el).click()
+                    return false 
+                  }
+                })
+            })      
+      cy.wait('@patientDashboard').its('response.statusCode').should('eq', 200)
+      cy.waitForPageLoad()
 
       // Access the consultation template
       cy.get('.btn--left').click()
-      cy.wait(5000)
-
+      cy.waitForPageLoad()
       cy.contains('Orders').click()
       cy.waitForLoader()      
             cy.get('.orderBtnContainer ul li a.orderBtn') // Select all available orders
