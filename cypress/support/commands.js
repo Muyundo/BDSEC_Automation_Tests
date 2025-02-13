@@ -65,22 +65,7 @@ Cypress.Commands.add('waitForNetworkIdle', (options = {}) => {
     })
   })
 
-  return cy.wait(100) // Small initial wait
-    .then(() => {
-      return new Cypress.Promise((resolve, reject) => {
-        const checkRequests = () => {
-          if (pendingRequests === 0) {
-            resolve();
-          } else if (timeout <= 0) {
-            reject(new Error('Timed out waiting for network idle'))
-          } else {
-            timeout -= 100;
-            setTimeout(checkRequests, 100)
-          }
-        };
-        checkRequests()
-      })
-    })
+
 })
 
 Cypress.on('uncaught:exception', (err, runnable) => {
