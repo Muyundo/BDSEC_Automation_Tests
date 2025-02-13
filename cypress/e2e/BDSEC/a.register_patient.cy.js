@@ -20,9 +20,15 @@ context('Actions', () => {
     const randomAge = Math.floor(Math.random() * 50) + 1
 
     cy.module()
-    cy.get('.fa-user').click()
+    cy.waitForNetworkIdle()
+    cy.waitForNetworkIdle()
+    cy.get('.apps > ul', { timeout: 20000 })
+        .should('be.visible')
+        .contains('Registration', { timeout: 20000 })
+        .should('be.visible')
+        .click()
     cy.waitForLoader()
-    cy.get('.fa-plus').click({ force: true })
+    cy.get('.fa-plus', {wait: 10000}).should('be.visible').click({ force: true })
     cy.waitForLoader()
 
     // Type in the fields
@@ -59,15 +65,51 @@ context('Actions', () => {
     it('Start the patient visit', () => {
       cy.readFile('cypress/fixtures/patientData.json').then((patientData) => {
         cy.module()
-        // Use the captured registration number
-        cy.get('.fa-user').click()
-        cy.waitForLoader()
+    cy.waitForNetworkIdle()
+    cy.waitForNetworkIdle()
+    cy.get('.apps > ul', { timeout: 20000 })
+        .should('be.visible')
+        .contains('Registration', { timeout: 20000 })
+        .should('be.visible')
+        .click()
+    cy.waitForLoader()
         cy.get('#registrationNumber').should('be.visible').type(patientData.registrationNumber)
         cy.wait(2000)
         
         cy.get('.search-patient-id > .reg-srch-btn > .ng-binding').click()
         cy.waitForLoader()
-        cy.contains('Start OPD visit').click()
+       // cy.contains('Start OPD visit').click()
+////////////////////////////////////////////////////////
+cy.get('.submit-btn-container')
+  .first()
+  .within(() => {
+    // Make sure dropdown toggle exists and is clickable
+    cy.get('.toggle-button')
+      .should('be.visible')
+      .should('not.be.disabled')
+      .click()
+    
+    // Wait for dropdown to be visible
+    cy.get('.secondaryOption')
+      .should('be.visible')
+      .should('have.length.gt', 0)
+      .find('button')
+      .then($options => {
+        // Filter out any disabled options
+        const enabledOptions = $options.filter(':not(:disabled)')
+        const randomIndex = Math.floor(Math.random() * enabledOptions.length)
+        
+        cy.wrap(enabledOptions[randomIndex])
+          .scrollIntoView()
+          .click({force: true})
+          .then($clicked => {
+            cy.log(`Selected queue: ${$clicked.text().trim()}`)
+          })
+      })
+  })
+  //////////////////////////////////////////////////////////////////
+
+
         cy.waitForLoader()
   
         const Fees = Math.floor(Math.random() * 51) * 10 + 500
