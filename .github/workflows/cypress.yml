@@ -8,11 +8,13 @@ on:
 jobs:
   cypress-run:
     runs-on: ubuntu-latest
-    timeout-minutes: 30  # Increase overall timeout for the job
+    timeout-minutes: 30
 
     steps:
       - name: Checkout code
         uses: actions/checkout@v4
+        with:
+          fetch-depth: 0  # Required to get changed files
 
       - name: Set up Node.js
         uses: actions/setup-node@v4
@@ -22,19 +24,22 @@ jobs:
       - name: Install dependencies
         run: npm ci
 
-      # Uncomment this step if you have a build process
-      # - name: Build the app
-      #   run: npm run build
+      - name: Get changed files
+        id: changed-files
+        uses: tj-actions/changed-files@v41
+        with:
+          files: cypress/e2e/**/*.cy.js
 
       - name: Run Cypress tests and record to Cypress Cloud
+        if: steps.changed-files.outputs.any_changed == 'true'
         uses: cypress-io/github-action@v6
         with:
           record: true
-          parallel: false  # Keep parallel disabled as per your script
+          parallel: false
+          spec: ${{ steps.changed-files.outputs.all_changed_files }}
         env:
           CYPRESS_RECORD_KEY: ${{ secrets.CYPRESS_RECORD_KEY }}
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-          # Optionally, increase Cypress's network timeout here too
           CYPRESS_COMMAND_TIMEOUT: 10000
           CYPRESS_REQUEST_TIMEOUT: 15000
           CYPRESS_RESPONSE_TIMEOUT: 15000
