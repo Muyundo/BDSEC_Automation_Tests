@@ -59,10 +59,25 @@ it('Update Clinical forms', () => {
 it('Verify the forms have been saved', ()=>{
     cy.readFile('cypress/fixtures/patientData.json').then((patientData) => {
     cy.module()
-    cy.get('.fa-stethoscope').click()
-    cy.wait('@patientsInqueue').its('response.statusCode').should('eq', 200)
-    cy.get('#patientIdentifier').should('be.visible').type(patientData.registrationNumber)
-    cy.get('.smallImages').click()
+    cy.get('.apps > ul').contains('Clinical', { timeout: 10000 }).should('be.visible').click()
+      cy.wait('@patientsInqueue').its('response.statusCode').should('eq', 200)
+      //cy.get('#patientIdentifier').should('be.visible').type(patientData.registrationNumber)
+      const regNumber = patientData.registrationNumber
+            cy.get('.active-patient').each(($el) => {
+              cy.wrap($el)
+                .find('.patient-id')
+                .invoke('text')
+                .then((text) => {
+                  if (text.trim() === regNumber) {
+                    cy.wrap($el).click()
+                    return false 
+                  }
+                })
+            })      
+      cy.wait('@patientDashboard').its('response.statusCode').should('eq', 200)
+      cy.waitForPageLoad()
+
+      // Access the consultation template
     cy.wait('@patientDashboard').its('response.statusCode').should('eq', 200)
     cy.contains('.form-name', 'Amsler Grid Test', { timeout: 10000 }) 
       .should('be.visible');
