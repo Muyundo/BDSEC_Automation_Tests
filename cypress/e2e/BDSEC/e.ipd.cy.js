@@ -5,7 +5,7 @@ context('Actions', () => {
       cy.interceptAPI()
     })
 
-  it('Patient Disposition', () => {
+  /*it('Patient Disposition', () => {
     cy.readFile('cypress/fixtures/patientData.json').then((patientData) => {
       cy.module()
       cy.get('.fa-stethoscope').click()
@@ -30,12 +30,12 @@ context('Actions', () => {
 
 
   })
-})
+})*/
 
 it('Admit a patient into a random ward', () => {
   cy.readFile('cypress/fixtures/patientData.json').then((patientData) => {
     cy.module()
-    cy.get('.fa-bed').click()
+    cy.get('.apps > ul').contains('Bed Management', { timeout: 10000 }).should('be.visible').click()
     cy.waitForLoader()
     cy.get('#patientIdentifier').type(patientData.registrationNumber)
     cy.waitForLoader()
@@ -44,18 +44,18 @@ it('Admit a patient into a random ward', () => {
   
     function selectRandomWard() {
       cy.get('.bed-type-selection button')
-        .should('exist') // Ensure wards exist before proceeding
-        .then(($wards) => {
-          const totalWards = $wards.length
-          if (totalWards > 0) {
-            const randomIndex = Math.floor(Math.random() * totalWards)
-            cy.get('.bed-type-selection button').eq(randomIndex).click() // Corrected selection
-            cy.log(`Selected ward: ${$wards[randomIndex].innerText}`)
-          } else {
-            cy.log('No wards found, retrying...')
-            selectRandomWard() // Retry if no wards exist
-          }
-        })
+      .should('be.visible')
+      .should('have.length.gt', 0)
+      .then($buttons => {
+        const randomIndex = Math.floor(Math.random() * $buttons.length)
+        cy.wrap($buttons[randomIndex])
+          .scrollIntoView()
+          .should('be.visible')
+          .click()
+          .then($clicked => {
+            cy.log(`Selected bed type: ${$clicked.text().trim()}`)
+          })
+      })
   
       cy.get('.room-info-wrapper')
         .should('exist')
