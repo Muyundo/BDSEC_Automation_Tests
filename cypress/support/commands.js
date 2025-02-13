@@ -7,9 +7,11 @@ Cypress.Commands.add('login', () => {
   cy.waitForLoader()
    cy.get('#username').type('superman')
    cy.get('#password').type('Admin123')
-   cy.wait(2000)
+   cy.wait(500)
    cy.get('[ng-hide="showOTP"] > .ng-isolate-scope > .login-body > .form-footer > .confirm').click()
 })
+
+
 
 Cypress.Commands.add("typeWithClear", { prevSubject: true }, (subject, text) => {
     cy.wrap(subject).then((element) => {
@@ -32,7 +34,7 @@ Cypress.Commands.add('module', ()=>{  //handles logins for each script that need
   cy.get('#location').select('Registration Desk')
   cy.get('.confirm').click()
   cy.waitForPageLoad()
-
+  cy.waitForNetworkIdle()
 })
 
 Cypress.Commands.add('interceptAPI', ()=> {
