@@ -12,17 +12,6 @@ Cypress.Commands.add('login', () => {
 })
 
 
-
-Cypress.Commands.add("typeWithClear", { prevSubject: true }, (subject, text) => {
-    cy.wrap(subject).then((element) => {
-      if (element.val() !== "") {
-        cy.wrap(element).clear()
-      }
-    })
-  
-    cy.wrap(subject).type(text)
-})
-
 Cypress.Commands.add('waitForLoader', (timeout = 5000) => {
     cy.wait(timeout)
     cy.get('.loader', { timeout: 10000 }).should('not.exist')
@@ -31,7 +20,7 @@ Cypress.Commands.add('waitForLoader', (timeout = 5000) => {
 Cypress.Commands.add('module', ()=>{  //handles logins for each script that needs it
   cy.waitForLoader()
 
-  cy.get('#location').select('Registration Desk')
+  cy.get('#location', {timeout: 10000}).should('be.visible').select('Registration Desk')
   cy.get('.confirm').click()
   cy.waitForPageLoad()
   cy.waitForNetworkIdle()
