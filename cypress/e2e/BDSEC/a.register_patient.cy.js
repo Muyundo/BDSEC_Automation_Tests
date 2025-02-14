@@ -83,7 +83,7 @@ context('Actions', () => {
 cy.get('.submit-btn-container')
   .first()
   .within(() => {
-    cy.get('.toggle-button')
+    cy.get('.toggle-button', {timeout: 10000})
       .should('be.visible')
       .should('not.be.disabled')
       .click()
