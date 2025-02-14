@@ -1,4 +1,5 @@
 context('Actions', () => {
+ cy.waitForPageLoad()
  
   it('Review and approve orders in the Lab', () => {
     cy.readFile('cypress/fixtures/patientData.json').then((patientData) => {
