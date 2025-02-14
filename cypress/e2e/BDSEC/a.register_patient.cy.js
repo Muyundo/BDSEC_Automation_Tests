@@ -72,24 +72,21 @@ context('Actions', () => {
         .contains('Registration', { timeout: 20000 })
         .should('be.visible')
         .click()
-    cy.waitForLoader()
-        cy.get('#registrationNumber').should('be.visible').type(patientData.registrationNumber)
+        cy.waitForNetworkIdle()
+        cy.waitForPageLoad()
+        cy.get('#registrationNumber', {timeout: 10000}).should('be.visible').type(patientData.registrationNumber)
         cy.wait(2000)
         
         cy.get('.search-patient-id > .reg-srch-btn > .ng-binding').click()
         cy.waitForLoader()
        // cy.contains('Start OPD visit').click()
-////////////////////////////////////////////////////////
 cy.get('.submit-btn-container')
   .first()
   .within(() => {
-    // Make sure dropdown toggle exists and is clickable
     cy.get('.toggle-button')
       .should('be.visible')
       .should('not.be.disabled')
       .click()
-    
-    // Wait for dropdown to be visible
     cy.get('.secondaryOption')
       .should('be.visible')
       .should('have.length.gt', 0)
@@ -97,8 +94,7 @@ cy.get('.submit-btn-container')
       .then($options => {
         // Filter out any disabled options
         const enabledOptions = $options.filter(':not(:disabled)')
-        const randomIndex = Math.floor(Math.random() * enabledOptions.length)
-        
+        const randomIndex = Math.floor(Math.random() * enabledOptions.length)        
         cy.wrap(enabledOptions[randomIndex])
           .scrollIntoView()
           .click({force: true})
@@ -107,14 +103,12 @@ cy.get('.submit-btn-container')
           })
       })
   })
-  //////////////////////////////////////////////////////////////////
-
 
         cy.waitForLoader()
   
         const Fees = Math.floor(Math.random() * 51) * 10 + 500
-        cy.get(':nth-child(1) > .form-builder-column-wrapper > .form-builder-column > .form-field-wrap > .form-field-content-wrap > .obs-control-field > .fl > input').type(Fees)
-        cy.get(':nth-child(3) > .form-builder-column-wrapper > .form-builder-column > .form-field-wrap > .form-field-content-wrap > .obs-control-field > .fl > input').type(Fees)
+        cy.get(':nth-child(1) > .form-builder-column-wrapper > .form-builder-column > .form-field-wrap > .form-field-content-wrap > .obs-control-field > .fl > input', {timeout: 10000}).should('be.visible').type(Fees)
+        cy.get(':nth-child(3) > .form-builder-column-wrapper > .form-builder-column > .form-field-wrap > .form-field-content-wrap > .obs-control-field > .fl > input', {timeout: 10000}).should('be.visible').type(Fees)
         cy.contains('Save').click({ force: true })
         cy.wait(1000)
       })
