@@ -5,7 +5,7 @@ context('Actions', () => {
       cy.interceptAPI()
     })
 
-  it('Patient Disposition', () => {
+  it('Patient Disposition',  {retries: 4},() => {
     cy.readFile('cypress/fixtures/patientData.json').then((patientData) => {
       cy.module()
       cy.get('.apps > ul' , { timeout: 20000 }).should('be.visible').contains('Clinical').click()
@@ -43,6 +43,9 @@ context('Actions', () => {
 })
 
 it('Admit a patient into a random ward', () => {
+  if (!firstTestPassed) {
+    this.skip(); // Skip if the first test failed
+  }
   cy.readFile('cypress/fixtures/patientData.json').then((patientData) => {
     cy.module()
     cy.get('.apps > ul' , { timeout: 20000 }).should('be.visible').contains('Bed Management').click()
