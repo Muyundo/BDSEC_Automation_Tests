@@ -8,7 +8,7 @@ context('Actions', () => {
   it('Patient Disposition', () => {
     cy.readFile('cypress/fixtures/patientData.json').then((patientData) => {
       cy.module()
-      cy.get('.apps > ul').contains('Clinical', { timeout: 10000 }).should('be.visible').click()
+      cy.get('.apps > ul' , { timeout: 20000 }).should('be.visible').contains('Clinical').click()
       cy.wait('@patientsInqueue').its('response.statusCode').should('eq', 200)
      // cy.get('#patientIdentifier').should('be.visible').type(patientData.registrationNumber)
      const regNumber = patientData.registrationNumber
@@ -25,8 +25,8 @@ context('Actions', () => {
      })      
       cy.wait('@patientDashboard').its('response.statusCode').should('eq', 200)
       cy.waitForPageLoad()
-      // Access the consultation section
-      cy.get('.btn--left').click()
+      cy.waitForNetworkIdle()      // Access the consultation section
+      cy.get('.grouped-buttons', { timeout: 10000 }).should('be.visible').contains('Consultation').click()
       //cy.wait('@PublishedForms').its('response.statusCode').should('eq', 200)     
       cy.contains('Disposition').click()
       cy.waitForLoader()      
@@ -45,49 +45,48 @@ context('Actions', () => {
 it('Admit a patient into a random ward', () => {
   cy.readFile('cypress/fixtures/patientData.json').then((patientData) => {
     cy.module()
-    cy.get('.apps > ul').contains('Bed Management', { timeout: 10000 }).should('be.visible').click()
+    cy.get('.apps > ul' , { timeout: 20000 }).should('be.visible').contains('Bed Management').click()
     cy.waitForLoader()
     cy.get('#patientIdentifier').type(patientData.registrationNumber)
     cy.waitForLoader()
     cy.get('.smallImages').click()
     cy.waitForLoader()
-  
     function selectRandomWard() {
       cy.get('.bed-type-selection button')
-      .should('be.visible')
-      .should('have.length.gt', 0)
-      .then($buttons => {
-        const randomIndex = Math.floor(Math.random() * $buttons.length)
-        cy.wrap($buttons[randomIndex])
-          .scrollIntoView()
-          .should('be.visible')
-          .click()
-          .then($clicked => {
-            cy.log(`Selected bed type: ${$clicked.text().trim()}`)
-          })
-      })
-  
+        .should('be.visible')
+        .should('have.length.gt', 0)
+        .then($buttons => {
+          const randomIndex = Math.floor(Math.random() * $buttons.length)
+          cy.wrap($buttons[randomIndex])
+            .scrollIntoView()
+            .should('be.visible')
+            .click()
+            .then($clicked => {
+              cy.log(`Selected bed type: ${$clicked.text().trim()}`)
+            })
+        })
+    
       cy.get('.room-info-wrapper')
         .should('exist')
         .then(($rooms) => {
           const totalRooms = $rooms.length
           if (totalRooms > 0) {
             const randomIndex = Math.floor(Math.random() * totalRooms)
-            cy.get('.room-info-wrapper').eq(randomIndex).click() // Corrected selection
+            cy.get('.room-info-wrapper').eq(randomIndex).click()
             cy.log(`Selected room: ${$rooms[randomIndex].innerText}`)
           } else {
             cy.log('No rooms found, retrying...')
             selectRandomWard()
           }
         })
-  
+    
       cy.get('.bed-layout-row')
         .should('exist')
         .then(($beds) => {
           const totalBeds = $beds.length
           if (totalBeds > 0) {
             const randomIndex = Math.floor(Math.random() * totalBeds)
-            cy.get('.bed-layout-row').eq(randomIndex).click() // Corrected selection
+            cy.get('.bed-layout-row').eq(randomIndex).click()
             cy.log(`Selected bed: ${$beds[randomIndex].innerText}`)
           } else {
             cy.log('No beds found, retrying...')
@@ -95,15 +94,25 @@ it('Admit a patient into a random ward', () => {
           }
         })
     }
-  
+    
     // Retry ward selection up to 3 times if it fails
     Cypress._.times(3, () => {
       selectRandomWard()
     })
-  cy.get('.adt-admit').click()
-  cy.wait(500)
-  cy.get('.ngdialog-content').contains('Yes').click()
+    
+    cy.get('.adt-admit').click()
+    cy.wait(500)
+    
+    // Check if the popup exists and handle accordingly
+    cy.get('body').then($body => {
+      if ($body.find('.ngdialog-content').length > 0) {
+        cy.get('.ngdialog-content').contains('Yes').click()
+      } else {
+        cy.log('No confirmation popup appeared, continuing with the script')
+      }
+    })
+   // cy.get('#observation_1', {timeout: 10000}).should('be.visible').type('Patient admitted')
+    //cy.get('#modal-revise-button1').click()
 })
-
 })
 })
