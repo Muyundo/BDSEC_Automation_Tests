@@ -20,8 +20,6 @@ context('Actions', () => {
     const randomAge = Math.floor(Math.random() * 50) + 1
 
     cy.module()
-    cy.waitForNetworkIdle()
-    cy.waitForNetworkIdle()
     cy.get('.apps > ul', { timeout: 20000 })
         .should('be.visible')
         .contains('Registration', { timeout: 20000 })
@@ -65,14 +63,11 @@ context('Actions', () => {
     it('Start the patient visit', () => {
       cy.readFile('cypress/fixtures/patientData.json').then((patientData) => {
         cy.module()
-    cy.waitForNetworkIdle()
-    cy.waitForNetworkIdle()
     cy.get('.apps > ul', { timeout: 20000 })
         .should('be.visible')
         .contains('Registration', { timeout: 20000 })
         .should('be.visible')
         .click()
-        cy.waitForNetworkIdle()
         cy.waitForPageLoad()
         cy.get('#registrationNumber', {timeout: 10000}).should('be.visible').type(patientData.registrationNumber)
         cy.wait(2000)
