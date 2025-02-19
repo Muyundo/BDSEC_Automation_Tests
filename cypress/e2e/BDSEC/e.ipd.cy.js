@@ -8,11 +8,13 @@ context('Actions', () => {
     cy.readFile('cypress/fixtures/patientData.json').then((patientData) => {
       cy.module()
       cy.get('.apps > ul' , { timeout: 20000 }).should('be.visible').contains('Clinical').click()
-      //cy.wait('@patientsInqueue').its('response.statusCode').should('eq', 200)
-     // cy.get('#patientIdentifier').should('be.visible').type(patientData.registrationNumber)
+      cy.waitForLoader()
+      cy.location('href', { timeout: 60000 }).should('include', '/default/patient/search');
      const regNumber = patientData.registrationNumber
-     cy.get('.active-patient').each(($el) => {
-       cy.wrap($el)
+     cy.get('.active-patient', {timeout: 20000})
+     .should('be.visible')
+     .each(($el) => {
+        cy.wrap($el)
          .find('.patient-id')
          .invoke('text')
          .then((text) => {
@@ -123,7 +125,7 @@ it('Admit a patient into a random ward', () => {
     // Handle confirmation popup if it appears
     cy.get('body').then($body => {
       if ($body.find('.ngdialog-content').length > 0) {
-        cy.get('.ngdialog-content').contains('Yes').click()
+        cy.get('.ngdialog-content').contains('Admit').click()
       } else {
         cy.log('No confirmation popup appeared, continuing...')
       }
