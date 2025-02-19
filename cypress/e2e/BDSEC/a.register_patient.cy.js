@@ -25,8 +25,10 @@ context('Actions', () => {
         .contains('Registration', { timeout: 20000 })
         .should('be.visible')
         .click()
-    cy.waitForPageLoad()    
-    cy.get('.fa-plus', {timeout: 10000}).should('be.visible').click({ force: true })
+    cy.waitForPageLoad()   
+    cy.get('.reg-header', {timeout: 10000})
+    .should('be.visible')
+    .contains('Create New').click() 
     cy.waitForPageLoad()    
 
     // Type in the fields
