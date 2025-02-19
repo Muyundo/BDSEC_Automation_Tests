@@ -83,7 +83,7 @@ context('Actions', () => {
       })
     })
 
-    it('Start the patient visit', () => {
+    it('Start a random patient visit', () => {
       cy.readFile('cypress/fixtures/patientData.json').then((patientData) => {
         cy.module()
         cy.waitForPageLoad()    
