@@ -7,11 +7,9 @@ context('Actions', () => {
     cy.readFile('cypress/fixtures/patientData.json').then((patientData) => {
       cy.module()
       cy.get('.apps > ul' , { timeout: 20000 }).should('be.visible').contains('Clinical').click()
-      cy.reload()
-      cy.url({ timeout: 20000 }).should('include', '/default/patient/search');
-      //cy.get('.search-box', { timeout: 20000 }).should('be.visible');
-      //  cy.wait('@patientsInqueue').its('response.statusCode').should('eq', 200)
-        //cy.get('#patientIdentifier').should('be.visible').type(patientData.registrationNumber)
+      cy.waitForLoader()
+      cy.location('href', { timeout: 60000 }).should('include', '/default/patient/search');
+      
         const regNumber = patientData.registrationNumber
         cy.get('.active-patient', {timeout: 20000})
         .should('be.visible')
