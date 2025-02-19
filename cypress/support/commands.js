@@ -5,9 +5,12 @@ Cypress.Commands.add("baseurl", () => {
 
       Cypress.Commands.add('login', () => {
         cy.waitForPageLoad()        
-        cy.get('#username').type('superman')
+        cy.get('#username', {timeout: 20000})
+        .should('be.visible')
+        .type('superman')
         cy.get('#password').type('Admin123')
-        cy.get('[ng-hide="showOTP"] > .ng-isolate-scope > .login-body', {timeout: 10000}).contains('Login')
+        cy.get('[ng-hide="showOTP"] > .ng-isolate-scope > .login-body', {timeout: 10000})
+        .contains('Login')
         .should('be.visible')
         .click()
             })
@@ -19,12 +22,13 @@ Cypress.Commands.add("baseurl", () => {
       })
 
 
-      Cypress.Commands.add('module', ()=>{  //handles logins for each script that needs it
+      Cypress.Commands.add('module', ()=>{ 
         cy.waitForPageLoad()
-        cy.get('#location', {timeout: 10000}).should('be.visible').select('Registration Desk')
+        cy.get('#location', {timeout: 20000})
+        .should('be.visible')
+        .select('Registration Desk')
         cy.get('.confirm').click()
         cy.waitForPageLoad()
-       // cy.waitForNetworkIdle()
       })
 
 
@@ -50,18 +54,6 @@ Cypress.Commands.add("baseurl", () => {
         })
       })
 
-
-     /* Cypress.Commands.add('waitForNetworkIdle', (options = {}) => {
-        const timeout = options.timeout || 10000;
-        let pendingRequests = 0;
-
-        cy.intercept({ url: '**' }, (req) => {
-          pendingRequests++;
-          req.on('response', () => {
-            pendingRequests--
-          })
-        })
-      })*/
 
       Cypress.on('uncaught:exception', (err, runnable) => {
           return false
