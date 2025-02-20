@@ -28,7 +28,9 @@ context('Actions', () => {
   
 
       // Access the consultation template
-      cy.get('.btn--left').click()
+      cy.get('.dashboard-header', {timeout: 60000})
+      .contains('Consultation', {timeout: 20000})
+      .should('be.visible').click()
       cy.waitForPageLoad()
       cy.get('#opd-tabs > .opd-header-bottom')
         .contains('Orders', {timeout: 20000})
