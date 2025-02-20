@@ -4,7 +4,7 @@ context('Actions', () => {
       cy.login()
     })
 
- /*it('Patient Disposition',  {retries: 4},() => {
+ it('Patient Disposition',  {retries: 4},() => {
     cy.readFile('cypress/fixtures/patientData.json').then((patientData) => {
       cy.module()
       cy.get('.apps > ul' , { timeout: 20000 }).should('be.visible').contains('Clinical').click()
@@ -47,7 +47,7 @@ context('Actions', () => {
 
 
   })
-})*/
+})
 
 it('Admit a patient into a random ward', () => {
   /*if (!firstTestPassed) {
