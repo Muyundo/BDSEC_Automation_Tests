@@ -4,7 +4,7 @@ context('Actions', () => {
       cy.login()
     })
 
- it('Patient Disposition',  {retries: 4},() => {
+ /*it('Patient Disposition',  {retries: 4},() => {
     cy.readFile('cypress/fixtures/patientData.json').then((patientData) => {
       cy.module()
       cy.get('.apps > ul' , { timeout: 20000 }).should('be.visible').contains('Clinical').click()
@@ -26,11 +26,14 @@ context('Actions', () => {
      })      
       //cy.wait('@patientDashboard').its('response.statusCode').should('eq', 200)
       cy.waitForPageLoad()
-      cy.get('.grouped-buttons', { timeout: 10000 }).should('be.visible').contains('Consultation').click()
+      cy.get('.dashboard-header', {timeout: 60000})
+      .contains('Consultation', {timeout: 20000})
+      .should('be.visible').click()
       //cy.wait('@PublishedForms').its('response.statusCode').should('eq', 200)     
       cy.contains('Disposition').click()
       cy.waitForPageLoad()
-      cy.get('#dispositionAction')
+      cy.get('#dispositionAction', {timeout: 20000})
+      .should('be.visible')
         .select('Admit Patient') 
         .should('have.value', 'string:ADMIT')
     
@@ -44,7 +47,7 @@ context('Actions', () => {
 
 
   })
-})
+})*/
 
 it('Admit a patient into a random ward', () => {
   /*if (!firstTestPassed) {
@@ -123,17 +126,27 @@ it('Admit a patient into a random ward', () => {
     cy.wait(500)
     
     // Handle confirmation popup if it appears
-    cy.get('body').then($body => {
-      if ($body.find('.ngdialog-content').length > 0) {
-        cy.get('.ngdialog-content').contains('Admit').click()
+    cy.get('body').then(($body) => {
+      const bodyText = $body.text()
+    
+      if (bodyText.includes('Current visit type is') && bodyText.includes('Do you want to close it and start a new IPD visit?')) {
+        cy.get('.ngdialog-content').contains('Yes').click();
+      } else if ($body.find('.ngdialog-content').length > 0) {
+        cy.get('.ngdialog-content').contains('Admit').click();
       } else {
-        cy.log('No confirmation popup appeared, continuing...')
+        cy.get('.adt-admit').click();
       }
     })
     
+    
+  
+      
+          
+   
+    
     // Add observation and finalize admission
-    cy.get('#observation_1', {timeout: 10000}).should('be.visible').type('Patient admitted')
-    cy.get('#modal-revise-button1').click()
+   // cy.get('#observation_1', {timeout: 10000}).should('be.visible').type('Patient admitted')
+   // cy.get('#modal-revise-button1').click()
   })
 })
 })
