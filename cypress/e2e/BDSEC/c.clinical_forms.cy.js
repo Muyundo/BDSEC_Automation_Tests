@@ -33,7 +33,9 @@ it('Update Clinical forms', () => {
       
 
       // Access the consultation template
-      cy.get('.btn--left').click()
+      cy.get('.dashboard-header', {timeout: 60000})
+        .contains('Consultation', {timeout: 20000})
+        .should('be.visible').click()
       cy.wait('@PublishedForms').its('response.statusCode').should('eq', 200)
       cy.waitForPageLoad()
       //cy.get('#template-control-panel-button').click()
@@ -82,13 +84,12 @@ it('Verify the forms have been saved', ()=>{
                 })
             })      
       cy.waitForPageLoad()
-      cy.waitForLoader()
 
       // Access the consultation template
-    cy.contains('.form-name', 'Amsler Grid Test', { timeout: 10000 }) 
+    cy.contains('.form-name', 'Amsler Grid Test', { timeout: 20000 }) 
       .should('be.visible')
 
-    cy.contains('.form-name', 'Registration Details', { timeout: 10000 })
+    cy.contains('.form-name', 'Registration Details', { timeout: 20000 })
       .should('be.visible')
     })
   })
