@@ -101,7 +101,7 @@ context('Actions', () => {
         cy.get('.search-patient-id > .reg-srch-btn > .ng-binding').click()
         cy.waitForPageLoad()    
         // cy.contains('Start OPD visit').click()
-        cy.get('.submit-btn-container')
+        cy.get('.submit-btn-container', {timeout: 20000})
           .first()
           .within(() => {
             cy.get('.toggle-button', {timeout: 10000})
