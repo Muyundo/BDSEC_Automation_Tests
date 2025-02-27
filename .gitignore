@@ -42,3 +42,4 @@ yarn.lock
 # Coverage reports
 coverage/
 cypress/fixtures/patientData.json
+cypress.env.json
