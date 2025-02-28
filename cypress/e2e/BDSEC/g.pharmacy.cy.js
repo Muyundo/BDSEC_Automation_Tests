@@ -17,23 +17,38 @@ context('Actions', () => {
      cy.contains('Log in').click()
      cy.waitForPageLoad()
 
-     cy.get('.o_MessageList_empty', {timeout: 10000}).should('be.visible')
+     cy.get('.o_MessageList_empty', {timeout: 20000}).should('be.visible')
     // cy.waitForLoader()
 
      cy.wait('@InventoryDashboard')
 
      cy.get('.dropdown-toggle > .oi').click()
+     cy.get('.o-dropdown--menu', {timeout: 20000}).contains('Sales').click()
+     cy.get('.o_menu_sections', {timeout: 20000}).contains('Orders').click()
+     cy.get('.o-dropdown--menu', {timeout: 20000}).contains('Quotations').click()
+     cy.wait(1000)
+     cy.get('.o_searchview_input', { timeout: 20000 })
+     .should('be.visible')
+     .type(patientData.registrationNumber)
      cy.wait(500)
-     cy.get('.o-dropdown--menu').contains('Sales').click()
-     cy.wait(500)
-     cy.get('.o_menu_sections').contains('Orders').click()
-     cy.wait(500)
-     cy.get('.o-dropdown--menu').contains('Quotations').click()
-     cy.wait(5000)
-     cy.get('.o_searchview_input', { timeout: 10000 }).should('be.visible').type(patientData.registrationNumber)
-     cy.wait(500)
-     cy.get('.o_searchview_input').type('{Enter}')
-     
+     cy.get('.o_searchview_input', {timeout: 20000}).type('{Enter}')
+     cy.get('.o_list_renderer', {timeout: 20000}).contains(patientData.fname, {timeout: 20000})
+     .should('be.visible')
+     .click({force: true})
+     cy.get('td[name="price_unit"]', {timeout: 20000})
+      .should('be.visible')
+      .each(($cell) => {
+        const randomPrice = Math.floor(Math.random() * 6) * 10 + 50
+        cy.wrap($cell).click().type(`${randomPrice}{enter}`); 
+      })
+
+     cy.get('.o_form_statusbar', {timeout: 20000})
+     cy.get('[data-hotkey="v"]')
+      .click()
+      cy.get('[name="action_view_invoice"]').click()
+      cy.get('.o_form_statusbar', {timeout: 20000}).contains('REGISTER PAYMENT')
+      cy.get('.modal-footer').contains('CREATE PAYMENT').click()
+    
         
           })
       })
