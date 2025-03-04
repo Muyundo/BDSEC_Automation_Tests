@@ -51,6 +51,7 @@ context('Actions', () => {
       .click()
       cy.get('.modal-footer > footer > .btn-primary', {timeout: 20000})
       .click()
+      cy.waitForLoader()
     
         
           })
