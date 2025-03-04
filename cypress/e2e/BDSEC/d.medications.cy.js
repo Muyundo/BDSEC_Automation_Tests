@@ -42,21 +42,25 @@ it('Update Clinical forms', () => {
         .contains('Medications')
         .click( {force: true})
         cy.get('#drug-name', {timeout: 20000})
-        .type('drop ')
+        .type('Atropine 1% drops ')
         .get('.ui-menu-item', {timeout: 20000})
-        .then(($options) => {
-          const randomIndex = Math.floor(Math.random() * $options.length); // Pick a random index
-          cy.wrap($options[randomIndex]).click(); 
+        .click()
+       /* .then(($options) => {
+          const randomIndex = Math.floor(Math.random() * $options.length)
+          cy.wrap($options[randomIndex]).click() */
 
-          cy.get('#uniform-dose').type(4)
+          cy.get('#uniform-dose').type(2)
           cy.get('#uniform-dose-unit').select('Drop')
-          cy.get('#frequency').select('Thrice a day')
-          cy.get('#duration').type('4')
+          cy.get('#frequency').select('Twice a day')
+          cy.get('#duration').type('2')
           cy.get('.add-drug-btn').click()
           cy.get('#opd-tabs > .opd-header-bottom').contains('Save').click()
-          cy.waitForLoader()
+          cy.get('.treatment-section-right')
+            .contains('Atropine 1% drops', {timeout: 20000})
+            .should('be.visible')
+         // cy.waitForLoader()
 
-  })
+  //})
 })
 })
 })
