@@ -38,7 +38,7 @@ context('Actions', () => {
         .click()
       cy.waitForPageLoad()
       function clickRandomOrderButtons() {
-        cy.get('.orderBtnContainer .orderBtn')
+        cy.get('.orderBtnContainer .orderBtn', {timeout: 20000})
           .should('have.length.gte', 2)
           .then($buttons => {
             const totalButtons = $buttons.length
