@@ -49,8 +49,7 @@ context('Actions', () => {
         .click()
      cy.get('#account_invoice_payment_btn', {timeout: 20000})
       .click()
-     cy.get('.modal-footer')
-      .contains('CREATE PAYMENT', {timeout: 20000})
+      cy.get('.modal-footer > footer > .btn-primary', {timeout: 20000})
       .click()
     
         
