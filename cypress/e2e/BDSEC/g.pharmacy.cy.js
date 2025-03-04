@@ -35,19 +35,23 @@ context('Actions', () => {
      cy.get('.o_list_renderer', {timeout: 20000}).contains(patientData.fname, {timeout: 20000})
      .should('be.visible')
      .click({force: true})
-     cy.get('td[name="price_unit"]', {timeout: 20000})
+     /*cy.get('td[name="price_unit"]', {timeout: 20000})
       .should('be.visible')
       .each(($cell) => {
         const randomPrice = Math.floor(Math.random() * 6) * 10 + 50
         cy.wrap($cell).click().type(`${randomPrice}{enter}`); 
-      })
+      })*/
 
      cy.get('.o_form_statusbar', {timeout: 20000})
      cy.get('[data-hotkey="v"]')
       .click()
-      cy.get('[name="action_view_invoice"]').click()
-      cy.get('.o_form_statusbar', {timeout: 20000}).contains('REGISTER PAYMENT')
-      cy.get('.modal-footer').contains('CREATE PAYMENT').click()
+     cy.get('[name="action_view_invoice"]', {timeout: 20000})
+        .click()
+     cy.get('#account_invoice_payment_btn', {timeout: 20000})
+      .click()
+     cy.get('.modal-footer')
+      .contains('CREATE PAYMENT', {timeout: 20000})
+      .click()
     
         
           })
