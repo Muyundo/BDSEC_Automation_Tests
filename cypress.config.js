@@ -12,8 +12,10 @@ module.exports = defineConfig({
         projectId: '6gphnc',
           
     setupNodeEvents(on, config) {
-      // implement node event listeners here
-    },
+      config.env.CYPRESS_USERNAME = process.env.CYPRESS_USERNAME;
+      config.env.CYPRESS_PASSWORD = process.env.CYPRESS_PASSWORD;
+      return config
+        },
   },
   exit: false,
 
