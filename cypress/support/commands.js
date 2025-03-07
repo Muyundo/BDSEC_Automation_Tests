@@ -1,23 +1,18 @@
 Cypress.Commands.add("baseurl", () => {
- // cy.visit("http://102.133.147.40/bahmni/home/index.html#/login");
- // cy.visit('https://bdsec.intellisoftkenya.com/bahmni/home/index.html#/login')
-  cy.visit('https://bdsec.intellisoftkenya.com/bahmni/home/index.html#/login')
+  //cy.visit("http://102.133.147.40/bahmni/home/index.html#/login");
+ cy.visit('https://bdsec.intellisoftkenya.com/bahmni/home/index.html#/login')
 })
 
       Cypress.Commands.add('login', () => {
-        cy.waitForPageLoad()        
-        cy.get('#username', {timeout: 20000})
-        .should('be.visible')
-        //.type(Cypress.env('USERNAME'))
-        .type(Cypress.env('CYPRESS_USERNAME'))
-        cy.get('#password')
-        //.type(Cypress.env('PASSWORD'))
-        .type(Cypress.env('CYPRESS_PASSWORD'))
-        cy.get('[ng-hide="showOTP"] > .ng-isolate-scope > .login-body', {timeout: 10000})
-        .contains('Login')
-        .should('be.visible')
-        .click()
-            })
+          cy.log("USERNAME: ", Cypress.env("CYPRESS_USERNAME"));
+          cy.get("#username").type(Cypress.env("CYPRESS_USERNAME") || "defaultUser")
+          cy.get("#password").type(Cypress.env("CYPRESS_PASSWORD") || "defaultPass")
+          cy.get('[ng-hide="showOTP"] > .ng-isolate-scope > .login-body', {timeout: 10000})
+            .contains('Login')
+            .should('be.visible')
+            .click()
+        })
+        
 
 
       Cypress.Commands.add('waitForLoader', (timeout = 5000) => {
