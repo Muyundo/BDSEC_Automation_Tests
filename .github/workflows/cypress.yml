@@ -43,3 +43,8 @@ jobs:
           CYPRESS_COMMAND_TIMEOUT: 10000
           CYPRESS_REQUEST_TIMEOUT: 15000
           CYPRESS_RESPONSE_TIMEOUT: 15000
+          CYPRESS_USERNAME: ${{ secrets.CYPRESS_USERNAME }}
+          CYPRESS_PASSWORD: ${{ secrets.CYPRESS_PASSWORD }}
+      - name: Debug Environment Variables
+        run: echo "CYPRESS_USERNAME=${{ secrets.CYPRESS_USERNAME }}"
+  
