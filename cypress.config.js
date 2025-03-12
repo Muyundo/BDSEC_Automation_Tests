@@ -1,7 +1,7 @@
 const { defineConfig } = require("cypress");
 
 module.exports = defineConfig({
-  projectId: '6gphnc',  // Removed duplicate projectId
+  projectId: '6gphnc', 
   e2e: {
     pageLoadTimeout: 180000, 
     experimentalStudio: true,
@@ -10,12 +10,11 @@ module.exports = defineConfig({
     chromeWebSecurity: false,
 
     setupNodeEvents(on, config) {
-      // Use process.env for GitHub Actions and provide fallbacks
-      config.env.CYPRESS_USERNAME = process.env.CYPRESS_USERNAME || "defaultUser";
-      config.env.CYPRESS_PASSWORD = process.env.CYPRESS_PASSWORD || "defaultPass";
+    //  config.env.CYPRESS_USERNAME = process.env.CYPRESS_USERNAME;
+    //  config.env.CYPRESS_PASSWORD = process.env.CYPRESS_PASSWORD;
 
-      return config;
+    //  return config;
     },
   },
-  exit: false,  // This is not needed, Cypress exits by default
+  exit: false, 
 });
