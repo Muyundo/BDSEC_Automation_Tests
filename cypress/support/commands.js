@@ -4,9 +4,9 @@ Cypress.Commands.add("baseurl", () => {
 })
 
       Cypress.Commands.add('login', () => {
-          cy.log("USERNAME: ", Cypress.env("USERNAME"));
-          cy.get("#username").type(Cypress.env("USERNAME"))
-          cy.get("#password").type(Cypress.env("CYPRESS_PASSWORD"))
+          cy.log("USERNAME: ", Cypress.env("USERNAME") );
+          cy.get("#username").type(Cypress.env("USERNAME") || 'superman')
+          cy.get("#password").type(Cypress.env("CYPRESS_PASSWORD")  || 'Admin123')
           cy.get('[ng-hide="showOTP"] > .ng-isolate-scope > .login-body', {timeout: 10000})
             .contains('Login')
             .should('be.visible')
