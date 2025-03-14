@@ -9,7 +9,7 @@ context('Actions', () => {
      // cy.waitForLoader()
      cy.visit('https://erp-bdsec.intellisoftkenya.com/web/login')
 
-     cy.get('form').should('be.visible'); // Wait for form to be visible
+     cy.get('form').should('be.visible')
      cy.get('#login').type('admin')
      cy.get('#password').type('admin')
      cy.wait(500)
