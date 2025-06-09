@@ -40,7 +40,8 @@ it('Update Clinical forms', () => {
       cy.waitForPageLoad()
       cy.get('#template-control-panel-button').click()
       cy.waitForLoader()
-      cy.get('.multi-select-lab-tests ul li', { timeout: 10000 }) 
+      //cy.get('.multi-select-lab-tests ul li', { timeout: 10000 }) 
+      cy.get('.template-control-panel-right-wrap', { timeout: 10000 })
       .contains('Amsler Grid Test')
       .click()
       
